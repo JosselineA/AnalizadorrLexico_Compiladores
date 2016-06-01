@@ -1,1 +1,2 @@
-Identificador.posicion(6,0);
+in = j,
+kh;

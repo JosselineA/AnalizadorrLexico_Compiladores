@@ -52,6 +52,11 @@ public class FXMLDocumentController implements Initializable {
        a.showAndWait();
     }
     
+    @FXML void clean(ActionEvent e){
+        entrada.setText("");
+        resultado.setText("");
+    }
+    
     @FXML
     private void accion(ActionEvent e){
         try {
