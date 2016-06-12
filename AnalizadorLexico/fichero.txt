@@ -1,2 +1,2 @@
-in = j,
-kh;
+Identificador = nuevo linea ();
+Identificador.tamano(10);

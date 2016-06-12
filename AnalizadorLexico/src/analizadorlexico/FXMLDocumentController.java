@@ -5,6 +5,7 @@
  */
 package analizadorlexico;
 
+import AS.AnalizadorSintactico;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,13 +31,14 @@ import javafx.scene.control.TextField;
  */
 public class FXMLDocumentController implements Initializable {
     
-    
+    ArrayList<Token> tokensAS = new ArrayList();
+    boolean banderaErrorL = false;
     @FXML
     private Label label;
 
       @FXML
     private TextArea entrada,resultado;
-      Sintactico s= new Sintactico();
+      
     
 
     private void createLexFile(String path){
@@ -60,9 +63,14 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void accion(ActionEvent e){
         try {
+            tokensAS = new ArrayList<Token>();
             probarLexerFile();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+        }
+        if(!banderaErrorL){
+            AnalizadorSintactico as = new AnalizadorSintactico(tokensAS);
+            as.S();
         }
     }
    public void probarLexerFile() throws FileNotFoundException, IOException{
@@ -86,7 +94,7 @@ public class FXMLDocumentController implements Initializable {
             if(token ==null){
                 Resultados = Resultados ;
                 lex=lex;
-                s.setTokens(lex);
+                
                 resultado.setText(Resultados);
                 return;
                 
@@ -94,18 +102,28 @@ public class FXMLDocumentController implements Initializable {
             switch(token){
                 case ERROR:
                     Resultados = Resultados + "ERROR, sintaxís erronea \n";
+                    banderaErrorL = true;
                     break;
                 case Figura:
-                case PR: 
+                case nuevo:
+                case tamanoX:
+                case tamanoY:
+                case posicion:
+                case borde:
+                case eliminar:
+                case fondo:
                 case ID:
                 case Color:
                 case Numero:
                     Resultados = Resultados + "\nToken: "+token+" "+lexer.save+"\n";
                     lex = lex+token+"@codigo4321@"+lexer.save+"\n";
+                    tokensAS.add(token);
                     break;
                 default:
                     Resultados = Resultados + "\nToken: "+token+"\n";
+                    tokensAS.add(token);
                     break;
+                    
                     
             }
             
@@ -115,7 +133,7 @@ public class FXMLDocumentController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       String aux = "C:\\Users\\W8\\Desktop\\AnalizadorrLexico_Compiladores\\AnalizadorLexico\\src\\analizadorlexico\\lexico.flex";
+       String aux = "C:\\Users\\Javier\\Documents\\NetBeansProjects\\Cuatrimestre 6\\Compiladores\\AnalizadorrLexico_Compiladores\\AnalizadorLexico\\src\\analizadorlexico\\lexico.flex";
         createLexFile(aux);
     }    
     

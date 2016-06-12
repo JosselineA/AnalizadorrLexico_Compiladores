@@ -14,12 +14,13 @@ figuras= "cuadrado"|"rectangulo"|"circulo"|"triangulo"|"linea"
 %%
 <YYINITIAL> {color} {save = yytext(); return Color;}
 <YYINITIAL> {figuras} {save = yytext(); return Figura;}
-<YYINITIAL> nuevo {save = yytext(); return PR;}
-<YYINITIAL> tamano {save = yytext(); return PR;}
-<YYINITIAL> posicion {save = yytext(); return PR;}
-<YYINITIAL> fondo {save = yytext(); return PR;}
-<YYINITIAL> borde {save = yytext(); return PR;}
-<YYINITIAL> eliminar {save = yytext(); return PR;}
+<YYINITIAL> nuevo {save = yytext(); return nuevo;}
+<YYINITIAL> tamanoX {save = yytext(); return tamanoX;}
+<YYINITIAL> tamanoY {save = yytext(); return tamanoY;}
+<YYINITIAL> posicion {save = yytext(); return posicion;}
+<YYINITIAL> fondo {save = yytext(); return fondo;}
+<YYINITIAL> borde {save = yytext(); return borde;}
+<YYINITIAL> eliminar {save = yytext(); return eliminar;}
 <YYINITIAL>{
 {white} {/*Ignore*/}
 "//".* {/*Ignore*/}
