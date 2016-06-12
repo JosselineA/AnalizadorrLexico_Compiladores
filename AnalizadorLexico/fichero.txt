@@ -1,2 +1,2 @@
-Identificador = nuevo linea ();
-Identificador.tamano(10);
+Identificador = nuevo linea();
+Identificador.tamanoY(largo);
