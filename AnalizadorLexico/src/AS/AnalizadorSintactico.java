@@ -526,10 +526,7 @@ public class AnalizadorSintactico {
                 try {
                     if (tokens.get(index) == PI) {
                         tokens.remove(0);
-                        try {
-                            if (tokens.get(index) == Figura) {
-                                tokens.remove(0);
-
+                       
                                 try {
                                     if (tokens.get(index) == PD) {
                                         tokens.remove(0);
@@ -554,14 +551,7 @@ public class AnalizadorSintactico {
                                     System.err.println("Se esperaba parentesis derecho ");
                                 }
 
-                            } else {
-                                tokens = new ArrayList<Token>();
-                                System.err.println("Se esperaba figura ");
-                            }
-                        } catch (Exception e) {
-                            tokens = new ArrayList<Token>();
-                            System.err.println("Se esperaba figura ");
-                        }
+                            
                     } else {
                         tokens = new ArrayList<Token>();
                         System.err.println("Se esperaba parentesis izquierdo ");
