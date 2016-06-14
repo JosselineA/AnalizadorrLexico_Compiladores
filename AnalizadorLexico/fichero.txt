@@ -1,2 +1,3 @@
-Identificador = nuevo linea();
-Identificador.tamanoY(largo);
+identificador = nuevo rectangulo();
+identificador.fondo(rojo);
+identificador.borde(color);

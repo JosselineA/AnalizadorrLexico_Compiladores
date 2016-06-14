@@ -26,18 +26,19 @@ public class AnalizadorSintactico {
 
         
                 crear();
-                InicioFuncion();
-                
-                if(!tokens.isEmpty())
-                    S();
-           
+                R();
+               
        
         
     }
-  /*  public void S() {
-        R();
+    public void R() {
+        crear();
+                InicioFuncion();
+                
+                if(!tokens.isEmpty())
+                    R();
     }
-*/
+
     public void crear() {
         try {
             if (tokens.get(0) == ID) {
@@ -103,8 +104,17 @@ public class AnalizadorSintactico {
                             System.err.println("Se esperaba palabra reservada nuevo");
                         }
                     } else {
-                       tokens = new ArrayList<Token>();// 
+                        try{
+                        if(tokens.get(1) != Punto){
+                             tokens = new ArrayList<Token>();// 
                        System.err.println("Se esperaba palabra reservada igual");
+                       
+                        }
+                        }catch(Exception e){
+                              System.err.println("Se esperaba palabra reservada igual");
+                        }
+                        
+                      
                     }
                 } catch (Exception e) {
                     tokens = new ArrayList<Token>();//
@@ -128,6 +138,11 @@ public class AnalizadorSintactico {
                         tokens.remove(0);
                         funciones();
                     } else {
+                        if(tokens.get(0) == igual){
+                            tokens.add(0,ID);
+                            crear();
+                            return;
+                        }
                         tokens = new ArrayList<Token>();
                         System.err.println("Se esperaba punto ");
                     }
