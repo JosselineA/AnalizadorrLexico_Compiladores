@@ -37,7 +37,7 @@ public class FXMLDocumentController implements Initializable {
     private Label label;
 
       @FXML
-    private TextArea entrada,resultado;
+    private TextArea entrada,resultado,ErroresSin;
       
     
 
@@ -69,7 +69,8 @@ public class FXMLDocumentController implements Initializable {
             System.out.println(ex.getMessage());
         }
         if(!banderaErrorL){
-            AnalizadorSintactico as = new AnalizadorSintactico(tokensAS);
+            ErroresSin.setText("");
+            AnalizadorSintactico as = new AnalizadorSintactico(tokensAS,ErroresSin);        
             as.S();
         }
     }

@@ -8,6 +8,7 @@ package AS;
 import analizadorlexico.Token;
 import static analizadorlexico.Token.*;
 import java.util.ArrayList;
+import javafx.scene.control.TextArea;
 
 /**
  *
@@ -17,14 +18,16 @@ public class AnalizadorSintactico {
 
     ArrayList<Token> tokens;
     int index;
+    TextArea s;
 
-    public AnalizadorSintactico(ArrayList<Token> tokens) {
+    public AnalizadorSintactico(ArrayList<Token> tokens, TextArea s) {
         this.tokens = tokens;
         index = 0;
+        this.s = s;
     }
   public void S(){
 
-        
+          s.setStyle("-fx-text-fill:red;" );
                 crear();
                 R();
                
@@ -37,6 +40,13 @@ public class AnalizadorSintactico {
                 
                 if(!tokens.isEmpty())
                     R();
+                else{
+                    if("".equals(s.getText())){
+                        s.setText("Sintaxis correcta");
+                         s.setStyle("-fx-text-fill:black;" );
+                    }
+                }
+                    
     }
 
     public void crear() {
@@ -65,65 +75,67 @@ public class AnalizadorSintactico {
                                                                 
                                                             } else {
                                                                 tokens = new ArrayList<Token>();
-                                                                System.err.println("Se esperaba punto y coma ");
+                                                                
+                                                                s.setText("Se esperaba punto y coma ");
                                                             }
                                                         } catch (Exception e) {
                                                             tokens = new ArrayList<Token>();
-                                                            System.err.println("Se esperaba punto y coma ");
+                                                            s.setText("Se esperaba punto y coma ");
                                                         }
                                                     } else {
                                                         tokens = new ArrayList<Token>();
-                                                        System.err.println("Se esperaba un parentesis derecho ");
+                                                        s.setText("Se esperaba un parentesis derecho ");
                                                     }
                                                 } catch (Exception e) {
                                                     tokens = new ArrayList<Token>();
-                                                    System.err.println("Se esperaba un parentesis derecho ");
+                                                    s.setText("Se esperaba un parentesis derecho ");
                                                 }
                                             } else {
                                                 tokens = new ArrayList<Token>();
-                                                System.err.println("Se esperaba una parentesis izquierdo ");
+                                                s.setText("Se esperaba una parentesis izquierdo ");
                                             }
                                         } catch (Exception e) {
                                             tokens = new ArrayList<Token>();
-                                            System.err.println("Se esperaba un parentesis izquierdo");
+                                            s.setText("Se esperaba un parentesis izquierdo");
                                         }
                                     } else {
                                         tokens = new ArrayList<Token>();
-                                        System.err.println("Se esperaba una figura ");
+                                        s.setText("Se esperaba una figura ");
                                     }
                                 } catch (Exception e) {
                                     tokens = new ArrayList<Token>();
-                                    System.err.println("Se esperaba una figura ");
+                                    s.setText("Se esperaba una figura ");
                                 }
                             } else {
                                 tokens = new ArrayList<Token>();
-                                System.err.println("Se esperaba palabra reservada nuevo");
+                                s.setText("Se esperaba palabra reservada nuevo");
                             }
                         } catch (Exception e) {
                             tokens = new ArrayList<Token>();
-                            System.err.println("Se esperaba palabra reservada nuevo");
+                            s.setText("Se esperaba palabra reservada nuevo");
                         }
                     } else {
                         try{
                         if(tokens.get(1) != Punto){
                              tokens = new ArrayList<Token>();// 
-                       System.err.println("Se esperaba palabra reservada igual");
+                       s.setText("Se esperaba palabra reservada igual o punto");
                        
                         }
                         }catch(Exception e){
-                              System.err.println("Se esperaba palabra reservada igual");
+                              s.setText("Se esperaba palabra reservada igual o punto");
                         }
                         
                       
                     }
                 } catch (Exception e) {
                     tokens = new ArrayList<Token>();//
-                    System.err.println("Se esperaba palabra reservada igual");
+                    s.setText("Se esperaba palabra reservada igual o punto");
                 }
              } else {
 
             }
         } catch (Exception e) {
+            
         }
                 
     }
@@ -144,15 +156,15 @@ public class AnalizadorSintactico {
                             return;
                         }
                         tokens = new ArrayList<Token>();
-                        System.err.println("Se esperaba punto ");
+                        s.setText("Se esperaba punto ");
                     }
                 } catch (Exception e) {
                     tokens = new ArrayList<Token>();
-                    System.err.println("Se esperaba punto ");
+                    s.setText("Se esperaba punto ");
                 }
             } else {
                 tokens = new ArrayList<Token>();
-                System.err.println("Se esperaba identificador ");
+                s.setText("Se esperaba identificador ");
             }
         } catch (Exception e) {
             //vacio
@@ -184,35 +196,35 @@ public class AnalizadorSintactico {
 
                                             } else {
                                                 tokens = new ArrayList<Token>();
-                                                System.err.println("Se esperaba punto y coma ");
+                                                s.setText("Se esperaba punto y coma ");
                                             }
                                         } catch (Exception e) {
                                             tokens = new ArrayList<Token>();
-                                            System.err.println("Se esperaba punto y coma ");
+                                            s.setText("Se esperaba punto y coma ");
                                         }
                                     } else {
                                         tokens = new ArrayList<Token>();
-                                        System.err.println("Se esperaba parentesis derecho ");
+                                        s.setText("Se esperaba parentesis derecho ");
                                     }
                                 } catch (Exception e) {
                                     tokens = new ArrayList<Token>();
-                                    System.err.println("Se esperaba parentesis derecho ");
+                                    s.setText("Se esperaba parentesis derecho ");
                                 }
                             } else {
                                 tokens = new ArrayList<Token>();
-                                System.err.println("Se esperaba entero ");
+                                s.setText("Se esperaba entero ");
                             }
                         } catch (Exception e) {
                             tokens = new ArrayList<Token>();
-                            System.err.println("Se esperaba entero ");
+                            s.setText("Se esperaba entero ");
                         }
                     } else {
                         tokens = new ArrayList<Token>();
-                        System.err.println("Se esperaba parentesis izquierdo ");
+                        s.setText("Se esperaba parentesis izquierdo ");
                     }
                 } catch (Exception e) {
                     tokens = new ArrayList<Token>();
-                    System.err.println("Se esperaba parentesis izquierdo ");
+                    s.setText("Se esperaba parentesis izquierdo ");
                 }
             } else {
                 tamanoX();
@@ -220,7 +232,7 @@ public class AnalizadorSintactico {
             }
         } catch (Exception e) {
             tokens = new ArrayList<Token>();
-            System.err.println("Se esperaba palabra reservada ");
+            s.setText("Se esperaba palabra reservada ");
         }
 
     }
@@ -251,52 +263,52 @@ public class AnalizadorSintactico {
 
                                                             } else {
                                                                 tokens = new ArrayList<Token>();
-                                                                System.err.println("Se esperaba punto y coma ");
+                                                                s.setText("Se esperaba punto y coma ");
                                                             }
                                                         } catch (Exception e) {
                                                             tokens = new ArrayList<Token>();
-                                                            System.err.println("Se esperaba punto y coma ");
+                                                            s.setText("Se esperaba punto y coma ");
                                                         }
                                                     } else {
                                                         tokens = new ArrayList<Token>();
-                                                        System.err.println("Se esperaba parentesis derecho ");
+                                                        s.setText("Se esperaba parentesis derecho ");
                                                     }
                                                 } catch (Exception e) {
                                                     tokens = new ArrayList<Token>();
-                                                    System.err.println("Se esperaba parentesis derecho ");
+                                                    s.setText("Se esperaba parentesis derecho ");
                                                 }
                                             } else {
                                                 tokens = new ArrayList<Token>();
-                                                System.err.println("Se esperaba  entero ");
+                                                s.setText("Se esperaba  entero ");
                                             }
                                         } catch (Exception e) {
                                             tokens = new ArrayList<Token>();
-                                            System.err.println("Se esperaba entero ");
+                                            s.setText("Se esperaba entero ");
                                         }
                                     } else {
                                         tokens = new ArrayList<Token>();
-                                        System.err.println("Se esperaba  coma ");
+                                        s.setText("Se esperaba  coma ");
                                     }
                                 } catch (Exception e) {
                                     tokens = new ArrayList<Token>();
-                                    System.err.println("Se esperaba  coma ");
+                                    s.setText("Se esperaba  coma ");
                                 }
 
                             } else {
                                 tokens = new ArrayList<Token>();
-                                System.err.println("Se esperaba entero ");
+                                s.setText("Se esperaba entero ");
                             }
                         } catch (Exception e) {
                             tokens = new ArrayList<Token>();
-                            System.err.println("Se esperaba entero ");
+                            s.setText("Se esperaba entero ");
                         }
                     } else {
                         tokens = new ArrayList<Token>();
-                        System.err.println("Se esperaba parentesis izquierdo ");
+                        s.setText("Se esperaba parentesis izquierdo ");
                     }
                 } catch (Exception e) {
                     tokens = new ArrayList<Token>();
-                    System.err.println("Se esperaba parentesis izquierdo ");
+                    s.setText("Se esperaba parentesis izquierdo ");
                 }
             } else {
                 posicion();
@@ -304,7 +316,7 @@ public class AnalizadorSintactico {
             }
         } catch (Exception e) {
             tokens = new ArrayList<Token>();
-            System.err.println("Se esperaba palabra reservada ");
+            s.setText("Se esperaba palabra reservada ");
         }
 
     }
@@ -335,52 +347,52 @@ public class AnalizadorSintactico {
 
                                                             } else {
                                                                 tokens = new ArrayList<Token>();
-                                                                System.err.println("Se esperaba punto y coma ");
+                                                                s.setText("Se esperaba punto y coma ");
                                                             }
                                                         } catch (Exception e) {
                                                             tokens = new ArrayList<Token>();
-                                                            System.err.println("Se esperaba punto y coma ");
+                                                            s.setText("Se esperaba punto y coma ");
                                                         }
                                                     } else {
                                                         tokens = new ArrayList<Token>();
-                                                        System.err.println("Se esperaba parentesis derecho ");
+                                                        s.setText("Se esperaba parentesis derecho ");
                                                     }
                                                 } catch (Exception e) {
                                                     tokens = new ArrayList<Token>();
-                                                    System.err.println("Se esperaba parentesis derecho ");
+                                                    s.setText("Se esperaba parentesis derecho ");
                                                 }
                                             } else {
                                                 tokens = new ArrayList<Token>();
-                                                System.err.println("Se esperaba  entero ");
+                                                s.setText("Se esperaba  entero ");
                                             }
                                         } catch (Exception e) {
                                             tokens = new ArrayList<Token>();
-                                            System.err.println("Se esperaba entero ");
+                                            s.setText("Se esperaba entero ");
                                         }
                                     } else {
                                         tokens = new ArrayList<Token>();
-                                        System.err.println("Se esperaba  coma ");
+                                        s.setText("Se esperaba  coma ");
                                     }
                                 } catch (Exception e) {
                                     tokens = new ArrayList<Token>();
-                                    System.err.println("Se esperaba  coma ");
+                                    s.setText("Se esperaba  coma ");
                                 }
 
                             } else {
                                 tokens = new ArrayList<Token>();
-                                System.err.println("Se esperaba entero ");
+                                s.setText("Se esperaba entero ");
                             }
                         } catch (Exception e) {
                             tokens = new ArrayList<Token>();
-                            System.err.println("Se esperaba entero ");
+                            s.setText("Se esperaba entero ");
                         }
                     } else {
                         tokens = new ArrayList<Token>();
-                        System.err.println("Se esperaba parentesis izquierdo ");
+                        s.setText("Se esperaba parentesis izquierdo ");
                     }
                 } catch (Exception e) {
                     tokens = new ArrayList<Token>();
-                    System.err.println("Se esperaba parentesis izquierdo ");
+                    s.setText("Se esperaba parentesis izquierdo ");
                 }
             } else {
                color();
@@ -388,7 +400,7 @@ public class AnalizadorSintactico {
             }
         } catch (Exception e) {
             tokens = new ArrayList<Token>();
-            System.err.println("Se esperaba palabra reservada  ");
+            s.setText("Se esperaba palabra reservada  ");
         }
 
     }
@@ -414,36 +426,36 @@ public class AnalizadorSintactico {
 
                                             } else {
                                                 tokens = new ArrayList<Token>();
-                                                System.err.println("Se esperaba punto y coma ");
+                                                s.setText("Se esperaba punto y coma ");
                                             }
                                         } catch (Exception e) {
                                             tokens = new ArrayList<Token>();
-                                            System.err.println("Se esperaba punto y coma ");
+                                            s.setText("Se esperaba punto y coma ");
                                         }
                                     } else {
                                         tokens = new ArrayList<Token>();
-                                        System.err.println("Se esperaba parentesis derecho ");
+                                        s.setText("Se esperaba parentesis derecho ");
                                     }
                                 } catch (Exception e) {
                                     tokens = new ArrayList<Token>();
-                                    System.err.println("Se esperaba parentesis derecho ");
+                                    s.setText("Se esperaba parentesis derecho ");
                                 }
 
                             } else {
                                 tokens = new ArrayList<Token>();
-                                System.err.println("Se esperaba color ");
+                                s.setText("Se esperaba color ");
                             }
                         } catch (Exception e) {
                             tokens = new ArrayList<Token>();
-                            System.err.println("Se esperaba color ");
+                            s.setText("Se esperaba color ");
                         }
                     } else {
                         tokens = new ArrayList<Token>();
-                        System.err.println("Se esperaba parentesis izquierdo ");
+                        s.setText("Se esperaba parentesis izquierdo ");
                     }
                 } catch (Exception e) {
                     tokens = new ArrayList<Token>();
-                    System.err.println("Se esperaba parentesis izquierdo ");
+                    s.setText("Se esperaba parentesis izquierdo ");
                 }
             } else {
                         colorB();
@@ -451,7 +463,7 @@ public class AnalizadorSintactico {
             }
         } catch (Exception e) {
             tokens = new ArrayList<Token>();
-            System.err.println("Se esperaba palabra reservada  ");
+            s.setText("Se esperaba palabra reservada  ");
         }
 
     }
@@ -477,43 +489,43 @@ public class AnalizadorSintactico {
 
                                             } else {
                                                 tokens = new ArrayList<Token>();
-                                                System.err.println("Se esperaba punto y coma ");
+                                                s.setText("Se esperaba punto y coma ");
                                             }
                                         } catch (Exception e) {
                                             tokens = new ArrayList<Token>();
-                                            System.err.println("Se esperaba punto y coma ");
+                                            s.setText("Se esperaba punto y coma ");
                                         }
                                     } else {
                                         tokens = new ArrayList<Token>();
-                                        System.err.println("Se esperaba parentesis derecho ");
+                                        s.setText("Se esperaba parentesis derecho ");
                                     }
                                 } catch (Exception e) {
                                     tokens = new ArrayList<Token>();
-                                    System.err.println("Se esperaba parentesis derecho ");
+                                    s.setText("Se esperaba parentesis derecho ");
                                 }
 
                             } else {
                                 tokens = new ArrayList<Token>();
-                                System.err.println("Se esperaba color ");
+                                s.setText("Se esperaba color ");
                             }
                         } catch (Exception e) {
                             tokens = new ArrayList<Token>();
-                            System.err.println("Se esperaba color ");
+                            s.setText("Se esperaba color ");
                         }
                     } else {
                         tokens = new ArrayList<Token>();
-                        System.err.println("Se esperaba parentesis izquierdo ");
+                        s.setText("Se esperaba parentesis izquierdo ");
                     }
                 } catch (Exception e) {
                     tokens = new ArrayList<Token>();
-                    System.err.println("Se esperaba parentesis izquierdo ");
+                    s.setText("Se esperaba parentesis izquierdo ");
                 }
             } else {
                 eliminar();
             }
         } catch (Exception e) {
             tokens = new ArrayList<Token>();
-            System.err.println("Se esperaba palabra reservada  ");
+            s.setText("Se esperaba palabra reservada  ");
         }
 
     }
@@ -536,37 +548,37 @@ public class AnalizadorSintactico {
 
                                             } else {
                                                 tokens = new ArrayList<Token>();
-                                                System.err.println("Se esperaba punto y coma ");
+                                                s.setText("Se esperaba punto y coma ");
                                             }
                                         } catch (Exception e) {
                                             tokens = new ArrayList<Token>();
-                                            System.err.println("Se esperaba punto y coma ");
+                                            s.setText("Se esperaba punto y coma ");
                                         }
                                     } else {
                                         tokens = new ArrayList<Token>();
-                                        System.err.println("Se esperaba parentesis derecho ");
+                                        s.setText("Se esperaba parentesis derecho ");
                                     }
                                 } catch (Exception e) {
                                     tokens = new ArrayList<Token>();
-                                    System.err.println("Se esperaba parentesis derecho ");
+                                    s.setText("Se esperaba parentesis derecho ");
                                 }
 
                             
                     } else {
                         tokens = new ArrayList<Token>();
-                        System.err.println("Se esperaba parentesis izquierdo ");
+                        s.setText("Se esperaba parentesis izquierdo ");
                     }
                 } catch (Exception e) {
                     tokens = new ArrayList<Token>();
-                    System.err.println("Se esperaba parentesis izquierdo ");
+                    s.setText("Se esperaba parentesis izquierdo ");
                 }
             } else {
                 tokens = new ArrayList<Token>();
-                System.err.println("Se esperaba palabra reservada  ");
+                s.setText("Se esperaba palabra reservada  ");
             }
         } catch (Exception e) {
             tokens = new ArrayList<Token>();
-            System.err.println("Se esperaba palabra reservada");
+            s.setText("Se esperaba palabra reservada");
         }
 
     }
