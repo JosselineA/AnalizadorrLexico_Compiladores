@@ -1,1 +1,1 @@
-identificador =  rectangulo();
+ideentificador = nuev rectangulo();

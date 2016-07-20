@@ -26,7 +26,8 @@ public class AnalizadorSintactico {
         this.s = s;
     }
   public void S(){
-
+             if(tokens.isEmpty())
+                 s.setText("Se esperaba identificador");
           s.setStyle("-fx-text-fill:red;" );
                 crear();
                 R();
