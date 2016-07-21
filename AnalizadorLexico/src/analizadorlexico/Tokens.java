@@ -9,7 +9,14 @@ package analizadorlexico;
  *
  * @author Javier
  */
-public enum Token {
-    igual,  Numero, ERROR, resta,ID,PC,Punto,PD,PI, Color, Figura,Coma,nuevo,tamanoX,tamanoY,posicion,borde,fondo,eliminar;
-  
+public class Tokens {
+    public Token token;
+    public String palabra = "";
+    
+    public Tokens(){
+        
+    }
+    public Tokens(Token token){
+        this.token  = token;
+    }
 }

@@ -1,1 +1,3 @@
-ideentificador = nuev rectangulo();
+d = nuevo cuadrado();
+i.posicion(8,9);
+d.tamanoX(2,4);

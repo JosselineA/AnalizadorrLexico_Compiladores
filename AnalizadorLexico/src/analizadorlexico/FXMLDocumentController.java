@@ -31,7 +31,7 @@ import javafx.scene.control.TextField;
  */
 public class FXMLDocumentController implements Initializable {
     
-    ArrayList<Token> tokensAS = new ArrayList();
+    ArrayList<Tokens> tokensAS = new ArrayList();
     boolean banderaErrorL = false;
     @FXML
     private Label label;
@@ -63,7 +63,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void accion(ActionEvent e){
         try {
-            tokensAS = new ArrayList<Token>();
+            tokensAS = new ArrayList<Tokens>();
             probarLexerFile();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -118,11 +118,16 @@ public class FXMLDocumentController implements Initializable {
                 case Numero:
                     Resultados = Resultados + "\nToken: "+token+" "+lexer.save+"\n";
                     lex = lex+token+"@codigo4321@"+lexer.save+"\n";
-                    tokensAS.add(token);
+                    Tokens a = new Tokens();
+                    a.token = token;
+                    a.palabra = lexer.save;
+                    tokensAS.add(a);
                     break;
                 default:
                     Resultados = Resultados + "\nToken: "+token+"\n";
-                    tokensAS.add(token);
+                    Tokens b = new Tokens();
+                    b.token = token;
+                    tokensAS.add(b);
                     break;
                     
                     
