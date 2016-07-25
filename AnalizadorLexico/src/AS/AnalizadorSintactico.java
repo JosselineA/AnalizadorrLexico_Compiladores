@@ -7,6 +7,7 @@ package AS;
 
 import ASeman.VariablesCreadas;
 import ASeman.VariablesFunciones;
+import analizadorlexico.Figuras;
 import analizadorlexico.Token;
 import static analizadorlexico.Token.*;
 import analizadorlexico.Tokens;
@@ -22,21 +23,89 @@ public class AnalizadorSintactico {
     ArrayList<Tokens> tokens;
     ArrayList<VariablesCreadas> variablesD = new ArrayList<VariablesCreadas>();
     VariablesFunciones variablesF = new VariablesFunciones();
+    
+    //ArrayList para almacenar las especificaciones de las figuras
+    ArrayList<Figuras> figurasCreadas = new ArrayList<Figuras>();
+    
     int index;
     TextArea s;
     String ErrorSemantico = "";
     String nombreF = "";
+    //declarada
+    public ArrayList<Figuras> getFigurasCreadas(){
+        return figurasCreadas;
+    }
     public void setVariableD(String nombre,String tipo){
+        for (int i = 0; i < variablesD.size(); i++) {
+            if (variablesD.get(i).getNombre().equals(nombre)) {
+                variablesD.add(i,new  VariablesCreadas(nombre,tipo));
+                variablesD.remove(i+1);
+                setFigura(nombre, tipo);
+                return;
+            }    
+        }
         VariablesCreadas vc = new VariablesCreadas(nombre,tipo);
         variablesD.add(vc);
-        System.out.println("Nombre: "+nombre);
-        System.out.println("Tipo: "+tipo);
-    }
-      public void setVariableF(String nombre,String funcion){
-        variablesF = new VariablesFunciones(nombre,funcion);
+        setFigura(nombre, tipo);
         
     }
     
+    public void setVariableF(String nombre,String funcion){
+        variablesF = new VariablesFunciones(nombre,funcion);
+        
+    }
+    public void setFigura(String nombre,String tipo){
+         for (int i = 0; i < figurasCreadas.size(); i++) {
+            if (figurasCreadas.get(i).getNombre().equals(nombre)) {
+                figurasCreadas.add(i,new  Figuras(nombre,tipo));
+                figurasCreadas.remove(i+1);
+                
+                return;
+            }    
+        }
+        Figuras fi = new Figuras();
+        fi.setNombre(nombre);
+        fi.setFigura(tipo);
+        figurasCreadas.add(fi);
+    }
+    public void setFuncion(String funcion,String color,String color2,int largo,int ancho, int x, int y){
+         Figuras fi = new Figuras();
+         int index1 = 0;
+        for (int i = 0; i < figurasCreadas.size(); i++) {
+            if (figurasCreadas.get(i).getNombre().equals(nombreF)) {
+                if(funcion.equals(eliminar)){
+                    figurasCreadas.remove(i);
+                    return;
+                }
+                fi = figurasCreadas.get(i);
+                index1 = i;
+                break;
+            }    
+        }
+        switch(funcion){
+            case "tamanoY":
+                fi.setAncho(ancho);
+                break;
+            case "tamanoX":
+                fi.setAncho(ancho);
+                fi.setLargo(largo);
+                break;
+            case "posicion":
+                fi.setPosicionX(x);
+                fi.setPosicionY(y);
+                break;
+            case "color":
+                fi.setColorInterior(color);
+                break;    
+            case "borde":
+                fi.setColorBorde(color2);
+                break; 
+                
+        }
+        figurasCreadas.add(fi);
+        figurasCreadas.remove(index1+1);
+    }
+
     public void checarVariableCreada(){
         System.out.println("Veri");
         boolean bandera = false;
@@ -83,7 +152,6 @@ public class AnalizadorSintactico {
         }
          }
     }
-
     
     public AnalizadorSintactico(ArrayList<Tokens> tokens, TextArea s) {
         this.tokens = tokens;
@@ -94,7 +162,7 @@ public class AnalizadorSintactico {
       ErrorSemantico = "";
     variablesD = new ArrayList<VariablesCreadas>();
     variablesF = new VariablesFunciones(); 
-      
+      figurasCreadas = new ArrayList<Figuras>();
              if(tokens.isEmpty())
                  s.setText("Se esperaba identificador");
           s.setStyle("-fx-text-fill:red;" );
@@ -122,6 +190,7 @@ public class AnalizadorSintactico {
                          
                     }else{
                         s.setText(ErrorSemantico);
+                        figurasCreadas = new ArrayList<>();
                     }
                 }
                     
@@ -255,8 +324,7 @@ public class AnalizadorSintactico {
     }
 
     public void funciones() {
-        tamanoY();
-        
+        tamanoY();    
     }
 
     public void tamanoY() {
@@ -265,12 +333,14 @@ public class AnalizadorSintactico {
             if (tokens.get(index).token == tamanoY) {
                 setVariableF(nombreF,"tamanoY"); //--
                 checarVariableCreada();
+               
                 tokens.remove(0);
                 try {
                     if (tokens.get(index).token == PI) {
                         tokens.remove(0);
                         try {
                             if (tokens.get(index).token == Numero) {
+                                 setFuncion("tamanoY", "", "", 0, Integer.parseInt(tokens.get(index).palabra), 0, 0);
                                 tokens.remove(0);
                                 try {
                                     if (tokens.get(index).token == PD) {
@@ -323,7 +393,8 @@ public class AnalizadorSintactico {
     }
 
     public void tamanoX() {
-
+        int ancho = 5;
+        int largo = 5;
         try {
             if (tokens.get(index).token == tamanoX) {
                 setVariableF(nombreF,"tamanoX"); //--
@@ -334,12 +405,15 @@ public class AnalizadorSintactico {
                         tokens.remove(0);
                         try {
                             if (tokens.get(index).token == Numero) {
+                                ancho = Integer.parseInt(tokens.get(index).palabra);
                                 tokens.remove(0);
                                 try {
                                     if (tokens.get(index).token == Coma) {
                                         tokens.remove(0);
                                         try {
                                             if (tokens.get(index).token == Numero) {
+                                                largo = Integer.parseInt(tokens.get(index).palabra);
+                                                setFuncion("tamanoX", "", "", largo, ancho, 0, 0);
                                                 tokens.remove(0);
                                                 try {
                                                     if (tokens.get(index).token == PD) {
@@ -409,7 +483,8 @@ public class AnalizadorSintactico {
     }
 
     public void posicion() {
-
+        int x = 0;
+        int y = 0;
         try {
             if (tokens.get(index).token == posicion) {
                 setVariableF(nombreF,"posicion"); //--
@@ -420,12 +495,15 @@ public class AnalizadorSintactico {
                         tokens.remove(0);
                         try {
                             if (tokens.get(index).token == Numero) {
+                                x = Integer.parseInt(tokens.get(index).palabra);
                                 tokens.remove(0);
                                 try {
                                     if (tokens.get(index).token == Coma) {
                                         tokens.remove(0);
                                         try {
                                             if (tokens.get(index).token == Numero) {
+                                                y = Integer.parseInt(tokens.get(index).palabra);
+                                                setFuncion("posicion", "","", 0, 0, x, y);
                                                 tokens.remove(0);
                                                 try {
                                                     if (tokens.get(index).token == PD) {
@@ -506,8 +584,9 @@ public class AnalizadorSintactico {
                         tokens.remove(0);
                         try {
                             if (tokens.get(index).token == Color) {
+                                
+                                setFuncion("color",tokens.get(index).palabra ,"", 0, 0, 0,0);
                                 tokens.remove(0);
-
                                 try {
                                     if (tokens.get(index).token == PD) {
                                         tokens.remove(0);
@@ -571,6 +650,7 @@ public class AnalizadorSintactico {
                         tokens.remove(0);
                         try {
                             if (tokens.get(index).token == Color) {
+                                setFuncion("borde","",tokens.get(index).palabra , 0,0,0,0);
                                 tokens.remove(0);
 
                                 try {
@@ -629,6 +709,7 @@ public class AnalizadorSintactico {
             if (tokens.get(index).token == eliminar) {
                 setVariableF(nombreF,"eliminar"); //--
                 checarVariableCreada();
+                setFuncion("eliminar", "","",0,0,0,0);
                 tokens.remove(0);
                 try {
                     if (tokens.get(index).token == PI) {
