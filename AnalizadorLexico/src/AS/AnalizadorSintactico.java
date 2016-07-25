@@ -73,7 +73,7 @@ public class AnalizadorSintactico {
          int index1 = 0;
         for (int i = 0; i < figurasCreadas.size(); i++) {
             if (figurasCreadas.get(i).getNombre().equals(nombreF)) {
-                if(funcion.equals(eliminar)){
+                if(funcion.equals("eliminar")){
                     figurasCreadas.remove(i);
                     return;
                 }
