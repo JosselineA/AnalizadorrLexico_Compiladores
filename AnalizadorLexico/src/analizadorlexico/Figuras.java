@@ -12,12 +12,12 @@ package analizadorlexico;
 public class Figuras {
     String nombre = "";
     String figura = "";
-    int largo = 5;
-    int ancho = 5;
+    int largo = 20;
+    int ancho = 20;
     int posicionX = 0;
     int posicionY = 0;
-    String colorInterior = "negro";
-    String colorBorde = "negro";
+    String colorInterior = "black";
+    String colorBorde = "black";
     
     public Figuras(){
         
@@ -67,13 +67,31 @@ public class Figuras {
         return colorInterior;
     }
     public void setColorInterior(String colorInterior){
-        this.colorInterior=colorInterior;
+        this.colorInterior=colorT(colorInterior);
     }
      public String getColorBorde(){
         return colorBorde;
     }
     public void setColorBorde(String colorBorde){
-        this.colorBorde=colorBorde;
+        this.colorBorde=colorT(colorBorde);
+    }
+    private String colorT(String color){
+    
+                switch(color){
+                    case "rojo":
+                            return "red";
+                    case "azul":
+                            return "blue";
+                    case "verde":
+                        return "green";
+                    case "amarillo":
+                        return "yellow";
+                    case "blanco":
+                        return "white";
+                    case "negro":
+                        return "black";
+                }
+        return "black";
     }
     
     

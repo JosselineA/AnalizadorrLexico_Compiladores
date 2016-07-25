@@ -6,6 +6,7 @@
 package analizadorlexico;
 
 import AS.AnalizadorSintactico;
+import Paint2d.PaintProgram;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,6 +20,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -35,6 +37,7 @@ public class FXMLDocumentController implements Initializable {
     boolean banderaErrorL = false;
     @FXML
     private Label label;
+    @FXML Canvas canv;
 
       @FXML
     private TextArea entrada,resultado,ErroresSin;
@@ -72,6 +75,8 @@ public class FXMLDocumentController implements Initializable {
             ErroresSin.setText("");
             AnalizadorSintactico as = new AnalizadorSintactico(tokensAS,ErroresSin);        
             as.S();
+            PaintProgram pa = new PaintProgram(as.getFigurasCreadas(), canv);
+            pa.dibujar();
         }
     }
    public void probarLexerFile() throws FileNotFoundException, IOException{

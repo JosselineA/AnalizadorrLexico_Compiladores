@@ -1,3 +1,2 @@
 d = nuevo cuadrado();
-i.posicion(8,9);
-d.tamanoX(2,4);
+d.fondo(rojo);
