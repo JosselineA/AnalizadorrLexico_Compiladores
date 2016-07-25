@@ -1,2 +1,2 @@
 d = nuevo cuadrado();
-d.fondo(rojo);
+d.fondo(rojo)

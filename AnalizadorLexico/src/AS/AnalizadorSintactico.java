@@ -189,8 +189,12 @@ public class AnalizadorSintactico {
                          
                          
                     }else{
-                        s.setText(ErrorSemantico);
                         figurasCreadas = new ArrayList<>();
+                        if(!"".equals(s.getText()))
+                            return;
+                        System.out.println("hola");
+                        s.setText(ErrorSemantico);
+                        
                     }
                 }
                     

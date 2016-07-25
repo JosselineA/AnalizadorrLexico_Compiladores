@@ -144,6 +144,7 @@ public class FXMLDocumentController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ErroresSin.setText("");
        String aux = "C:\\Users\\Javier\\Documents\\NetBeansProjects\\Cuatrimestre 6\\Compiladores\\AnalizadorrLexico_Compiladores\\AnalizadorLexico\\src\\analizadorlexico\\lexico.flex";
         createLexFile(aux);
     }    
