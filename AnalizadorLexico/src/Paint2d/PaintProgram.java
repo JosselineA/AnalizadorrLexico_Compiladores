@@ -60,7 +60,14 @@ public class PaintProgram{
                 );
                break;
             case "triangulo":
-               
+                drawTriangulo(
+                       figurasCreada.getPosicionX(),
+                       figurasCreada.getPosicionY(),
+                       figurasCreada.getAncho(), //base
+                       figurasCreada.getLargo(), //altura
+                       figurasCreada.getColorBorde(),
+                       figurasCreada.getColorInterior()
+               );
                 break;
             case "linea":
                 drawLine(
@@ -71,6 +78,7 @@ public class PaintProgram{
                         figurasCreada.getPosicionY()
                 );
                 break;
+            
              
         }
         }
@@ -101,6 +109,15 @@ public class PaintProgram{
         gcB.setLineWidth(2);
         gcB.setStroke(Color.web(colorBorde));
         gcB.strokeLine(x,y,x+wh,y+hg);
+    }
+    private void drawTriangulo(int x, int y,int base, int altura,String colorBorde, String colorInterior){
+        gcB.setFill(Color.web(colorInterior));
+        gcB.setStroke(Color.web(colorBorde));
+        gcB.fillPolygon(new double[]{x, y+base, x}, 
+                new double[]{x, y+altura, x+altura}, 3);
+        gcB.strokePolygon(new double[]{x, y+base, x}, 
+                new double[]{x, y+altura, x+altura}, 3);
+  
     }
 
 }

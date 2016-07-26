@@ -1,2 +1,3 @@
-d = nuevo cuadrado();
-d.fondo(rojo)
+d = nuevo triangulo();
+d.borde(verde);
+d.tamanoX(50,50);
